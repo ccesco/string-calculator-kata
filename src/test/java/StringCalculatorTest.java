@@ -33,4 +33,9 @@ public class StringCalculatorTest {
         assertEquals(24, stringCalculator.add("10,14"));
     }
 
+
+    @Test
+    public void manyNumberAsInputTest() {
+        assertEquals(91, stringCalculator.add("1,2,3,4,5,6,7,8,9,10,11,12,13"));
+    }
 }

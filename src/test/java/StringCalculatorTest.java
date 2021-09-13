@@ -38,4 +38,10 @@ public class StringCalculatorTest {
     public void manyNumberAsInputTest() {
         assertEquals(91, stringCalculator.add("1,2,3,4,5,6,7,8,9,10,11,12,13"));
     }
+
+    @Test
+    public void newLineAsSeparatorSupportedTest() {
+        assertEquals(6, stringCalculator.add("1\n2,3"));
+    }
+
 }

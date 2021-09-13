@@ -2,6 +2,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class StringCalculatorTest {
 
@@ -48,6 +49,24 @@ public class StringCalculatorTest {
     public void withSpecificDelimiterSpecified() {
         assertEquals(3, stringCalculator.add("//;\n1;2"));
         assertEquals(3, stringCalculator.add("//:\n1:2"));
+    }
+
+    @Test
+    public void negativeNotSupportedWithOneNumber() {
+        Throwable exception = assertThrows(NegativeNumberException.class, () -> stringCalculator.add("-10"));
+        assertEquals(exception.getMessage(), "negatives not allowed [-10]");
+    }
+
+    @Test
+    public void negativeNotSupportedWithManyNegativeNumber() {
+        Throwable exception = assertThrows(NegativeNumberException.class, () -> stringCalculator.add("-1,-4"));
+        assertEquals(exception.getMessage(), "negatives not allowed [-1, -4]");
+    }
+
+    @Test
+    public void negativeNotSupportedWithManyNegativeNumberWithSpecificDelimiter() {
+        Throwable exception = assertThrows(NegativeNumberException.class, () -> stringCalculator.add("//;\n-1;-2"));
+        assertEquals(exception.getMessage(), "negatives not allowed [-1, -2]");
     }
 
 }

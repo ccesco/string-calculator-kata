@@ -44,4 +44,10 @@ public class StringCalculatorTest {
         assertEquals(6, stringCalculator.add("1\n2,3"));
     }
 
+    @Test
+    public void withSpecificDelimiterSpecified() {
+        assertEquals(3, stringCalculator.add("//;\n1;2"));
+        assertEquals(3, stringCalculator.add("//:\n1:2"));
+    }
+
 }

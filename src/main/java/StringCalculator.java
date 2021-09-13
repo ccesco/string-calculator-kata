@@ -1,6 +1,9 @@
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class StringCalculator {
 
@@ -30,11 +33,27 @@ public class StringCalculator {
         return DEFAULT_SEPARATORS;
     }
 
-    private int addWithSeparator(String numbers, String separator) {
-        return Arrays.stream(numbers.split(separator)).
-                filter(StringUtils::isNoneEmpty)
-                .map(Integer::valueOf)
+    private int addWithSeparator(String numbers, String separator) throws NegativeNumberException{
+        List<Integer> numbersInteger = getNumbers(numbers, separator);
+        List<Integer> negativeNumbers = numbersInteger
+                .stream()
+                .filter((number -> number < 0))
+                .collect(Collectors.toList());
+
+        if (negativeNumbers.size() > 0) {
+            throw new NegativeNumberException("negatives not allowed " + negativeNumbers);
+        }
+
+        return numbersInteger
+                .stream()
                 .reduce(Integer::sum)
                 .orElse(0);
+    }
+
+    private List<Integer> getNumbers(String numbers, String separator) {
+        return Arrays.stream(numbers.split(separator))
+                .filter(StringUtils::isNoneEmpty)
+                .map(Integer::valueOf)
+                .collect(Collectors.toList());
     }
 }

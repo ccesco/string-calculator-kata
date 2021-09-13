@@ -3,7 +3,6 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class StringCalculator {
 
@@ -27,13 +26,12 @@ public class StringCalculator {
     }
 
     private String getDelimiter(String possibleDelimiter) {
-        if (possibleDelimiter.contains(BEGINNING_STRING)) {
-            return possibleDelimiter.replace(BEGINNING_STRING, "");
-        }
-        return DEFAULT_SEPARATORS;
+        return possibleDelimiter.contains(BEGINNING_STRING)
+                ? possibleDelimiter.replace(BEGINNING_STRING, "")
+                : DEFAULT_SEPARATORS;
     }
 
-    private int addWithSeparator(String numbers, String separator) throws NegativeNumberException{
+    private int addWithSeparator(String numbers, String separator) throws NegativeNumberException {
         List<Integer> numbersInteger = getNumbers(numbers, separator);
         List<Integer> negativeNumbers = numbersInteger
                 .stream()
